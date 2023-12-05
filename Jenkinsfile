@@ -1,24 +1,28 @@
 pipeline {
-   agent any
-   stages {
-       stage('Build') {
-           steps {
-               echo 'Building the project...'
-               // Add commands for building your project here
-               
-           }
-       }
-       stage('Test') {
-           steps {
-               echo 'Running tests...'
-               // Add commands for running tests here
-           }
-       }
-       stage('Deploy') {
-           steps {
-               echo 'Deploying the application...'
-               // Add commands for deploying the application here
-           }
-       }
-   }
+    agent any
+    stages {
+
+        stage('Echoing') {
+            steps {
+                sh '''
+                pwd
+                echo "Hi Haider"
+                echo "Groovy Baby"
+                echo "Inside shell block"
+                '''
+            }
+        }
+
+        stage('Run Script') {
+            // This runs a script
+            steps {
+                sh 'sh ./run.sh'
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts '*.zip'
+        }
+    }
 }
